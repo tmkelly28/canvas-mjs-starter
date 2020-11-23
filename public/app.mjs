@@ -1,72 +1,12 @@
-const canvas = document.getElementById('canvas')
-const ctx = canvas.getContext('2d')
-
-canvas.width = window.innerWidth
-canvas.height = window.innerHeight
-
-class Ball {
-  constructor({ x, y, radius, color, ctx }) {
-    this.x = x
-    this.y = y
-    this.radius = radius
-    this.color = color
-    this.ctx = ctx
-  }
-
-  update() {
-    this.draw()
-  }
-
-  draw() {
-    const { x, y, radius, color, ctx } = this
-    ctx.beginPath()
-    ctx.arc(x, y, radius, 0, Math.PI * 2, true)
-    ctx.closePath()
-    ctx.fillStyle = color
-    ctx.fill()
-  }
-}
-
-class Rect {
-  constructor({ x, y, width, height, color, ctx }) {
-    this.x = x
-    this.y = y
-    this.color = color
-    this.width = width
-    this.height = height
-    this.ctx = ctx
-  }
-
-  update() {
-    this.draw()
-  }
-
-  draw() {
-    const { x, y, color, width, height, ctx } = this
-    ctx.fillStyle = color
-    ctx.fillRect(x, y, width, height)
-  }
-}
-
-class World {
-  constructor() {
-    this.objects = []
-  }
-
-  add(object) {
-    this.objects.push(object)
-  }
-
-  update() {
-    this.objects.forEach(obj => obj.update())
-  }
-}
+import { canvas, ctx } from './canvas.mjs'
+import Ball from './ball.mjs'
+import Slime from './slime.mjs'
+import World from './world.mjs'
 
 const world = new World()
-const ball = new Ball({ x: 50, y: 50, radius: 50, color: 'blue', ctx })
-const rect = new Rect({ x: 150, y: 150, height: 25, width: 25, color: 'green', ctx })
-world.add(ball)
-world.add(rect)
+const ball = new Ball({ x: 50, y: 50, radius: 25, color: 'blue', ctx })
+const slime = new Slime({ x: 150, y: window.innerHeight, color: 'green', ctx })
+world.add(ball, slime)
 
 const animate = () => {
   window.requestAnimationFrame(animate)
@@ -80,6 +20,37 @@ const onResize = () => {
   canvas.height = window.innerHeight
 }
 
+const KEYS = {
+  D: 68,
+  A: 65,
+  W: 87,
+}
+
+const onKeydown = ({ keyCode }) => {
+  switch (keyCode) {
+    case KEYS.D:
+      world.dispatch({ type: 'MOVE_FORWARD' })
+      break
+    case KEYS.A:
+      world.dispatch({ type: 'MOVE_BACKWARD' })
+      break
+    case KEYS.W:
+      world.dispatch({ type: 'JUMP' })
+      break
+  }
+}
+
+const onKeyup = ({ keyCode }) => {
+  switch (keyCode) {
+    case KEYS.D:
+    case KEYS.A:
+      world.dispatch({ type: 'STOP_MOVING' })
+      break
+  }
+}
+
 window.addEventListener('resize', onResize, true)
+window.addEventListener('keydown', onKeydown, true)
+window.addEventListener('keyup', onKeyup, true)
 
 animate()
