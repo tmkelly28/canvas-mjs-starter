@@ -1,5 +1,5 @@
 export default class Slime {
-  constructor({ x, y, color, ctx }) {
+  constructor({ x, y, color, ctx, canvas }) {
     this.x = x
     this.y = y
     this.dx = 0
@@ -7,6 +7,7 @@ export default class Slime {
     this.radius = 50
     this.color = color
     this.ctx = ctx
+    this.canvas = canvas
   }
 
   update(world) {
@@ -22,9 +23,9 @@ export default class Slime {
     if (state.jumping && this.dy === 0) this.dy = -5
     else {
       if (this.dy === 0) ;
-      else if (this.y >= window.innerHeight) {
+      else if (this.y >= this.canvas.height) {
         this.dy = 0
-        this.y = window.innerHeight
+        this.y = this.canvas.height
         world.dispatch({ type: 'LAND' })
       } else this.dy += 0.15
     }

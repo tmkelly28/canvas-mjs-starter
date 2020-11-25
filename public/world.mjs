@@ -30,6 +30,11 @@ export default class World {
     }
   }
 
+  addSlime(slime) {
+    this.state.slime = slime
+    this.add(slime)
+  }
+
   add(...objects) {
     this.objects.push(...objects)
   }

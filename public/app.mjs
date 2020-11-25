@@ -4,20 +4,16 @@ import Slime from './slime.mjs'
 import World from './world.mjs'
 
 const world = new World()
-const ball = new Ball({ x: 50, y: 50, radius: 25, color: 'blue', ctx })
-const slime = new Slime({ x: 150, y: window.innerHeight, color: 'green', ctx })
-world.add(ball, slime)
+const ball = new Ball({ x: 50, y: 50, radius: 25, color: 'blue', ctx, canvas })
+const slime = new Slime({ x: 100, y: canvas.height, color: 'green', ctx, canvas })
+world.addSlime(slime)
+world.add(ball)
 
 const animate = () => {
   window.requestAnimationFrame(animate)
   ctx.clearRect(0, 0, canvas.width, canvas.height)
 
   world.update()
-}
-
-const onResize = () => {
-  canvas.width = window.innerWidth
-  canvas.height = window.innerHeight
 }
 
 const KEYS = {
@@ -49,7 +45,6 @@ const onKeyup = ({ keyCode }) => {
   }
 }
 
-window.addEventListener('resize', onResize, true)
 window.addEventListener('keydown', onKeydown, true)
 window.addEventListener('keyup', onKeyup, true)
 
