@@ -19,5 +19,3 @@ export default class Rect {
     ctx.fillRect(x, y, width, height)
   }
 }
-
-
