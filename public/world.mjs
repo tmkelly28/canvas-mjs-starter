@@ -2,6 +2,7 @@ export default class World {
   constructor(canvas) {
     this.canvas = canvas
     this.ctx = canvas.getContext('2d')
+    this.mouse = { x: 0, y: 0 }
     this.objects = []
   }
 
@@ -21,5 +22,9 @@ export default class World {
   resize() {
     this.canvas.width = window.innerWidth
     this.canvas.height = window.innerHeight
+  }
+
+  updateMouse(x, y) {
+    this.mouse = { x, y }
   }
 }
