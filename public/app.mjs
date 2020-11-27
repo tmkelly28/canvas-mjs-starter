@@ -1,85 +1,26 @@
-const canvas = document.getElementById('canvas')
-const ctx = canvas.getContext('2d')
+import World from './world.mjs'
+import Circle from './circle.mjs'
+import Rect from './rect.mjs'
 
-canvas.width = window.innerWidth
-canvas.height = window.innerHeight
-
-class Ball {
-  constructor({ x, y, radius, color, ctx }) {
-    this.x = x
-    this.y = y
-    this.radius = radius
-    this.color = color
-    this.ctx = ctx
-  }
-
-  update() {
-    this.draw()
-  }
-
-  draw() {
-    const { x, y, radius, color, ctx } = this
-    ctx.beginPath()
-    ctx.arc(x, y, radius, 0, Math.PI * 2, true)
-    ctx.closePath()
-    ctx.fillStyle = color
-    ctx.fill()
-  }
-}
-
-class Rect {
-  constructor({ x, y, width, height, color, ctx }) {
-    this.x = x
-    this.y = y
-    this.color = color
-    this.width = width
-    this.height = height
-    this.ctx = ctx
-  }
-
-  update() {
-    this.draw()
-  }
-
-  draw() {
-    const { x, y, color, width, height, ctx } = this
-    ctx.fillStyle = color
-    ctx.fillRect(x, y, width, height)
-  }
-}
-
-class World {
-  constructor() {
-    this.objects = []
-  }
-
-  add(object) {
-    this.objects.push(object)
-  }
-
-  update() {
-    this.objects.forEach(obj => obj.update())
-  }
-}
-
-const world = new World()
-const ball = new Ball({ x: 50, y: 50, radius: 50, color: 'blue', ctx })
-const rect = new Rect({ x: 150, y: 150, height: 25, width: 25, color: 'green', ctx })
-world.add(ball)
-world.add(rect)
-
-const animate = () => {
-  window.requestAnimationFrame(animate)
-  ctx.clearRect(0, 0, canvas.width, canvas.height)
-
-  world.update()
-}
-
-const onResize = () => {
+const init = () => {
+  const canvas = document.getElementById('canvas')
   canvas.width = window.innerWidth
   canvas.height = window.innerHeight
+
+  const world = new World(canvas)
+  const circle = new Circle({ x: 50, y: 50, radius: 50, color: 'blue' })
+  const rect = new Rect({ x: 150, y: 150, height: 25, width: 25, color: 'green' })
+  world.add(circle, rect)
+
+  window.addEventListener('resize', () => world.resize(), true)
+  window.world = world
+
+  const animate = () => {
+    window.requestAnimationFrame(animate)
+    world.update()
+  }
+
+  animate()
 }
 
-window.addEventListener('resize', onResize, true)
-
-animate()
+init()
