@@ -96,6 +96,6 @@ const onMouseMove = ({ clientX, clientY }) => {
 }
 
 window.addEventListener('resize', onResize, true)
+window.addEventListener('mousemove', onMouseMove, true)
 
 animate()
-
