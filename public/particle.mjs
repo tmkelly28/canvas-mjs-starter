@@ -8,6 +8,10 @@ export default class Particle {
     this.velocity.angle = direction
   }
 
+  accelerate(acceleration) {
+    this.velocity = this.velocity.add(acceleration)
+  }
+
   update(context) {
     this.position = this.position.add(this.velocity)
     this.draw(context)
