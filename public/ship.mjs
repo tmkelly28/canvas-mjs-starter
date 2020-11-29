@@ -1,10 +1,12 @@
 import Vector from './vector.mjs'
 
-export default class Particle {
+export default class Ship {
   constructor(x, y, speed, direction, gravity = 0) {
     this.position = new Vector(x, y)
     this.velocity = Vector.fromMagnitudeAndAngle(speed, direction)
     this.gravity = new Vector(0, gravity)
+    this.angle = 0
+    this.isThrusting = false
   }
 
   get x() {
@@ -27,6 +29,10 @@ export default class Particle {
     this.velocity = this.velocity.add(acceleration)
   }
 
+  rotate(angle) {
+    this.angle += angle
+  }
+
   update(context) {
     this.accelerate(this.gravity)
     this.position = this.position.add(this.velocity)
@@ -35,7 +41,27 @@ export default class Particle {
 
   draw(context) {
     context.beginPath()
-    context.arc(this.position.x, this.position.y, 10, 0, Math.PI * 2, false)
-    context.fill()
+
+    context.save()
+    context.translate(this.position.x, this.position.y)
+    context.rotate(this.angle)
+
+    // want the ship to be facing left when we start
+    context.moveTo(10, 0)
+    context.lineTo(-10, -5)
+    context.moveTo(10, 0)
+    context.lineTo(-10, 5)
+    context.moveTo(-10, 5)
+    context.lineTo(-10, -5)
+
+    if (this.isThrusting) {
+      context.moveTo(-10, 0)
+      context.lineTo(-13, 0)
+    }
+
+    context.stroke()
+
+    context.restore()
   }
 }
+
