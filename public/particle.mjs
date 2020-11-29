@@ -1,10 +1,11 @@
 import Vector from './vector.mjs'
 
 export default class Particle {
-  constructor(x, y, speed, direction, gravity = 0) {
+  constructor(x, y, speed, direction, gravity = 0, mass = 0) {
     this.position = new Vector(x, y)
     this.velocity = Vector.fromMagnitudeAndAngle(speed, direction)
     this.gravity = new Vector(0, gravity)
+    this.mass = mass
   }
 
   get x() {
