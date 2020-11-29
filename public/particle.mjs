@@ -1,11 +1,10 @@
 import Vector from './vector.mjs'
 
 export default class Particle {
-  constructor(x, y, speed, direction) {
+  constructor(x, y, speed, direction, gravity = 0) {
     this.position = new Vector(x, y)
-    this.velocity = new Vector(0, 0)
-    this.velocity.magnitude = speed
-    this.velocity.angle = direction
+    this.velocity = Vector.fromMagnitudeAndAngle(speed, direction)
+    this.gravity = new Vector(0, gravity)
   }
 
   accelerate(acceleration) {
@@ -13,6 +12,7 @@ export default class Particle {
   }
 
   update(context) {
+    this.accelerate(this.gravity)
     this.position = this.position.add(this.velocity)
     this.draw(context)
   }

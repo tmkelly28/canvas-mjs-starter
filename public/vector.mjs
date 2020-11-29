@@ -4,6 +4,14 @@ export default class Vector {
     this._y = y
   }
 
+  static fromMagnitudeAndAngle(magnitude, angle) {
+    const newVector = new Vector(0, 0)
+    newVector.magnitude = magnitude
+    newVector.angle = angle
+
+    return newVector
+  }
+
   get x() {
     return this._x
   }
