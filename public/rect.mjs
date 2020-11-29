@@ -31,5 +31,3 @@ export default class Rect {
     ctx.strokeRect(x, y, width, height)
   }
 }
-
-
