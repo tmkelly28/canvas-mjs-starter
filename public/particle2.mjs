@@ -29,6 +29,17 @@ export default class Particle {
     this.velocity = this.velocity.add(acceleration)
   }
 
+  applyFriction(magnitude) {
+    // or, if you want to take a shortcut and be more performant, you could
+    // just decrease the velocity by some percentage each time
+    const friction = Vector.fromMagnitudeAndAngle(magnitude, this.velocity.angle)
+    if (this.velocity.magnitude > magnitude) {
+      this.velocity = this.velocity.subtract(friction)
+    } else {
+      this.velocity.magnitude = 0
+    }
+  }
+
   gravitateTo(object) {
     const distance = this.distanceTo(object.position)
     const angle = this.angleTo(object.position)
