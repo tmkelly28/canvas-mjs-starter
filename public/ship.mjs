@@ -1,32 +1,13 @@
 import Vector from './vector.mjs'
+import Particle from './particle2.mjs'
 
-export default class Ship {
+export default class Ship extends Particle {
   constructor(x, y, speed, direction, gravity = 0) {
-    this.position = new Vector(x, y)
-    this.velocity = Vector.fromMagnitudeAndAngle(speed, direction)
+    super({ x, y, speed, direction })
     this.gravity = new Vector(0, gravity)
     this.angle = 0
     this.isThrusting = false
-  }
-
-  get x() {
-    return this.position.x
-  }
-
-  set x(v) {
-    this.position.x = v
-  }
-
-  get y() {
-    return this.position.y
-  }
-
-  set y(v) {
-    this.position.y = v
-  }
-
-  accelerate(acceleration) {
-    this.velocity = this.velocity.add(acceleration)
+    this.isLanded = false
   }
 
   rotate(angle) {
@@ -34,9 +15,15 @@ export default class Ship {
   }
 
   update(context) {
-    this.accelerate(this.gravity)
-    this.position = this.position.add(this.velocity)
+    if (!this.isLanded) {
+      this.accelerate(this.gravity)
+      this.position = this.position.add(this.velocity)
+    }
     this.draw(context)
+  }
+
+  halt() {
+    this.isLanded = true
   }
 
   draw(context) {
@@ -64,4 +51,3 @@ export default class Ship {
     context.restore()
   }
 }
-
