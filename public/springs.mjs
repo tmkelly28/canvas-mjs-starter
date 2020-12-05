@@ -1,3 +1,4 @@
+import Vector from './vector.mjs'
 import Particle from './particle2.mjs'
 
 const canvas = document.getElementById('canvas')
@@ -18,10 +19,19 @@ const particle = new Particle(
   }
 )
 
+const spring = new Vector(canvas.width / 2, canvas.height / 2)
+const stiffness = 0.02
+
 const animate = () => {
   window.requestAnimationFrame(animate)
   context.clearRect(0, 0, canvas.width, canvas.height)
 
+  const distance = particle.distanceTo(spring)
+  const angle = particle.angleTo(spring)
+  // f = k * distance
+  const force = Vector.fromMagnitudeAndAngle(distance * stiffness, angle)
+  particle.accelerate(force)
+  particle.applyFriction(0.1)
   particle.update(context)
 }
 
