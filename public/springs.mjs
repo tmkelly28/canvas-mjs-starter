@@ -32,7 +32,7 @@ const animate = () => {
 
   // from the video:
   // not really distance, but a vector pointing from the particle to the springpoint
-  const distanceVector = spring.subtract(particle.position) 
+  const distanceVector = spring.subtract(particle.position)
   distanceVector.magnitude = distanceVector.magnitude - springLength
   const force = distanceVector.scalarMultiply(stiffness)
 
