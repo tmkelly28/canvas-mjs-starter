@@ -10,11 +10,14 @@ const init = () => {
   const mouse = { x: 0, y: 0 }
   const step = 20
   const origin = { x: canvas.width / 2, y: canvas.height / 2 }
+
+  const vector = (x, y, color) => new Vector(x, y, color, origin, step)
+
   const grid = new Grid(canvas.height, canvas.width, step)
-  const v1 = new Vector(1, 3, origin, step, 'mediumvioletred')
-  const v2 = new Vector(-4, 3, origin, step, 'cyan')
-  const v3 = new Vector(-5, -2, origin, step, 'crimson')
-  const v4 = new Vector(5, -2, origin, step, 'burlywood')
+  const v1 = vector(1, 3, 'mediumvioletred')
+  const v2 = vector(-4, 3, 'cyan')
+  const v3 = vector(-5, -2, 'crimson')
+  const v4 = vector(5, -2, 'burlywood')
 
   window.addEventListener('mousemove', ({ clientX, clientY }) => {
     mouse.x = clientX

@@ -1,5 +1,5 @@
 export default class Vector {
-  constructor(x, y, origin, step, color) {
+  constructor(x, y, color, origin, step) {
     this.x = x
     this.y = y
     this.origin = origin
@@ -10,7 +10,7 @@ export default class Vector {
   }
 
   update(context) {
-    const { x, y, origin, step, color } = this
+    const { x, y, color, origin, step } = this
     const angle = Math.atan2(-y, x)
 
     context.save()

@@ -12,7 +12,11 @@ export default class Grid {
       context.beginPath()
       context.moveTo(0, y)
       context.lineTo(width, y)
-      context.strokeStyle = 'black'
+      if (y === height / 2) {
+        context.strokeStyle = 'black'
+      } else {
+        context.strokeStyle = 'cadetblue'
+      }
       context.stroke()
     }
 
@@ -20,7 +24,11 @@ export default class Grid {
       context.beginPath()
       context.moveTo(x, 0)
       context.lineTo(x, height)
-      context.strokeStyle = 'black'
+      if (x === width / 2) {
+        context.strokeStyle = 'black'
+      } else {
+        context.strokeStyle = 'darkolivegreen'
+      }
       context.stroke()
     }
   }
