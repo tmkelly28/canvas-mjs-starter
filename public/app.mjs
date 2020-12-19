@@ -1,21 +1,35 @@
-import World from './world.mjs'
+import Grid from './grid.mjs'
+import Vector from './vector.mjs'
 
 const init = () => {
   const canvas = document.getElementById('canvas')
-  canvas.width = window.innerWidth
-  canvas.height = window.innerHeight
+  const context = canvas.getContext('2d')
+  canvas.width = 720
+  canvas.height = 720
 
-  const world = new World(canvas)
+  const mouse = { x: 0, y: 0 }
+  const step = 20
+  const origin = { x: canvas.width / 2, y: canvas.height / 2 }
+  const grid = new Grid(canvas.height, canvas.width, step)
+  const v1 = new Vector(1, 3, origin, step, 'mediumvioletred')
+  const v2 = new Vector(-4, 3, origin, step, 'cyan')
+  const v3 = new Vector(-5, -2, origin, step, 'crimson')
+  const v4 = new Vector(5, -2, origin, step, 'burlywood')
 
-  window.addEventListener('resize', () => world.resize(), true)
   window.addEventListener('mousemove', ({ clientX, clientY }) => {
-    world.updateMouse(clientX, clientY)
+    mouse.x = clientX
+    mouse.y = clientY
   }, false)
-  window.world = world
 
   const animate = () => {
+    context.clearRect(0, 0, canvas.width, canvas.height)
+    grid.update(context)
+    v1.update(context)
+    v2.update(context)
+    v3.update(context)
+    v4.update(context)
+
     window.requestAnimationFrame(animate)
-    world.update()
   }
 
   animate()
