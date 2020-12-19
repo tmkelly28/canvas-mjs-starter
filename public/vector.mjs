@@ -5,8 +5,8 @@ export default class Vector {
     this.origin = origin
     this.step = step
     this.color = color
-    this.growth = 0.01
-    this.growthSpeed = 0.01
+    this.growth = 0
+    this.growthSpeed = 0.02
   }
 
   add(vector) {

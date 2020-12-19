@@ -1,5 +1,6 @@
 import Grid from './grid.mjs'
 import Vector from './vector.mjs'
+import { randomColor } from './utils.mjs'
 
 const init = () => {
   const mouse = { x: 0, y: 0 }
@@ -18,6 +19,10 @@ const init = () => {
   const i = vector(1, 0, 'mediumvioletred')
   const j = vector(0, 1, 'cyan')
 
+  // [6, -2]
+  const k = i.scalarMult(6).add(j.scalarMult(-2))
+  k.color = randomColor()
+
   window.addEventListener('mousemove', ({ clientX, clientY }) => {
     mouse.x = clientX
     mouse.y = clientY
@@ -26,8 +31,7 @@ const init = () => {
   const animate = () => {
     context.clearRect(0, 0, canvas.width, canvas.height)
     grid.update(context)
-    i.update(context)
-    j.update(context)
+    k.update(context)
 
     window.requestAnimationFrame(animate)
   }
