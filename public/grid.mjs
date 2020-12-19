@@ -13,7 +13,7 @@ export default class Grid {
       context.moveTo(0, y)
       context.lineTo(width, y)
       if (y === height / 2) {
-        context.strokeStyle = 'black'
+        context.strokeStyle = 'antiquewhite'
       } else {
         context.strokeStyle = 'cadetblue'
       }
@@ -25,7 +25,7 @@ export default class Grid {
       context.moveTo(x, 0)
       context.lineTo(x, height)
       if (x === width / 2) {
-        context.strokeStyle = 'black'
+        context.strokeStyle = 'antiquewhite'
       } else {
         context.strokeStyle = 'darkolivegreen'
       }

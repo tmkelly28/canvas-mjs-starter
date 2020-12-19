@@ -9,6 +9,30 @@ export default class Vector {
     this.growthSpeed = 0.01
   }
 
+  add(vector) {
+    const { x, y, color, origin, step } = this
+
+    return new Vector(
+      x + vector.x,
+      y + vector.y,
+      color,
+      origin,
+      step
+    )
+  }
+
+  scalarMult(scalar) {
+    const { x, y, color, origin, step } = this
+
+    return new Vector(
+      x * scalar,
+      y * scalar,
+      color,
+      origin,
+      step
+    )
+  }
+
   update(context) {
     const { x, y, color, origin, step } = this
     const angle = Math.atan2(-y, x)
