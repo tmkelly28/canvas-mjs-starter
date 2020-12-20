@@ -56,3 +56,47 @@ c d
 - The *null space* (or *kernel*) of a matrix is the set of all vectors that "land on" (that is, become) [0, 0] as a result of the transformation
 
 ## Dot Products and Duality
+
+- The dot product of two vectors with the same dimensions means pairing up the coordinates, multiplying them together, and then adding up the products
+
+```
+1 3    
+ •   = (1 * 3) + (2 * 4) = 3 + 8 = 11
+2 4
+```
+
+- Geometrically, you can imagine this as "projecting" one vector onto a line that the other vector falls on, and then multiplying the lengths (magnitudes) of those vectors together
+- Duality is when there is a natural, but surprising, correspondence between two types of mathematical...thing
+- Duality, as it related to dot product, is that any time you have a linear transformation from some space to the number line, it's associated with a unique vector in that space, in the sense that performing the linear transformation is the same as taking a dot product with that vector.
+
+## Cross Products
+
+- The cross product of two vectors, v and w, is the area of the parallelgram that you'd get by taking v and w, moving the tail of v to the tip of w, and the tail of w to the tip of v
+  - Pretty similar to the what we use for the determinant, no?
+  - Order matters: in i X j, when we draw the parallelgram visually, if i is on the right and j is on the left, the result is positive. If its the other way around, then the result is negative
+
+  ```
+  v X w =
+         a b
+          X  = ad - cb
+         c d
+  ```
+
+- ...But not really
+- Cross product is _actually_ an operation on two 3d vectors, which gives a third vector whose length (magnitude) is the area of the parallelgram, and its direction is perpendicular to the plane on which the parallelgram sits
+
+- Fun note: a linear transformation that preserves dot products are called "orthonormal". The unit vectors remain perpendicular to each other, and still with unit lengths. These rigid motions like rotations.
+
+## Eigenvectors and Eigenvalues
+
+- Normally, when we apply a linear transformation, most vectors within the span of the vector space will be knocked off of their own 1-dimensional span (that is, the straight line that goes through that vector's tail and tip).
+- However, some vectors remain on their space, so the effect of the transformation is just like scaling it by some amount
+- These vectors are called *eigenvectors* of the transformation, and the amount that they are scalled is their *eignvalue*
+
+
+Formal definition of linearity
+
+```
+Additivity: L(v) + L(w) = L(v + w)
+Scaling:    cL(v) = L(cv)
+```
