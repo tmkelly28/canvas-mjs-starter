@@ -14,6 +14,24 @@ the vectors that are "scaled" when thinking about vectors as the linear combinat
 - If the span of two vectors, v and w, would be the same if one of the vectors was removed, we say that v and w are *linearly dependent*. 
   - In 2d space, this is what happens if the two basis vectors lie on top of each other
   - If this is not the case, the two vectors are *linearly independent*
-- The *basis* of a vector space is the set of linearly independent vectors that span the full space
+- The *basis* of a vector space is the set of _linearly independent_ vectors that _span_ the full space
 
 ## Linear Transformations and Matrices
+
+- *Linear transformations*
+  - a _transformation_ is just a fancy word for function, but suggestive of movement
+  - a transformation is linear if has two properties:
+    - lines must remain lines (without becoming curved)
+    - the origin must remain fixed in place
+    - you can also think of this as keeping grid lines parallel and evenly spaced
+  - for any linear transformation, if you know where i-hat and j-hat land, you can deduce where any vector will land by applying the same linear combination of `(a * v) + (b * w)`, where v and w are the new tips of i-hat/j-hat
+    - any linear transformation can be described by just 4 numbers - the coordinates of where i-hat and j-hat land
+  - a 2x2 matrix can be read as the coordinates where i-hat and j-hat land. The first column is the coordinates of where i-hat lands, and the second column is the coordinates of where j-hat lands
+  - Note: if the two columns are linearly dependent, it squishes 2D space down to 1d line (essentially, we go down a dimension)
+
+## Matrix Multiplication as Composition
+- The product of two matrices can be thought of in terms of where i-hat and j-hat land after applying their successive transformations
+
+## The Determinant
+
+## Inverse Matrices, Column Space, Null Space
