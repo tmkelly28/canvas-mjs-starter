@@ -34,4 +34,25 @@ the vectors that are "scaled" when thinking about vectors as the linear combinat
 
 ## The Determinant
 
+- Something we might want to know about a linear transformation is how much something is stretched or squished. Something we can use to think about this is the are "between" i-hat and j-hat
+- To calculate the *determinant* of a linear transformation, take the unit square defined by i-hat and j-hat, and see how its area changes as a result of the transformation
+  - Technically, the determinant is the factor by which the linear transformation scales any area
+- Note that the determinant can be negative - this has to do with the orientation of space. Whenever the orientation of space has been inverted, the determinant will be negative
+- Formula:
+
+```
+a b   determinant: ad - bc
+c d
+```
+- When the two columns of the matrix describe linearly dependent vectors, the determinant will be 0
+
 ## Inverse Matrices, Column Space, Null Space
+
+- The *inverse matrix* of a matrix is a matrix that describes how to "undo" the transformation played by the original matrix
+- The *identity transformation* is the transformation that does nothing. A matrix A and its inverse multiplied together will result in the identity transformation
+- Note that there no inverse if the determinant is 0, that is, if the transformation drops a dimension
+- *Rank* is another term for the number of dimensions in the output of a linear transformation.
+- The *column space* of a 2d matrix is the span of the two columns (vectors) described by the matrix
+- The *null space* (or *kernel*) of a matrix is the set of all vectors that "land on" (that is, become) [0, 0] as a result of the transformation
+
+## Dot Products and Duality
