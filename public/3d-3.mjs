@@ -9,80 +9,71 @@ canvas.height = height
 
 const focalLength = 300
 
-const rand = () => {
-  const r = Math.round(Math.random() * 500)
-  return r % 2 === 0 ? r : -r
-}
 const zSort = (c1, c2) => {
   return c1.z > c2.z ? -1 : 1
 }
 
-let speed = 0.01
-let radius = 200
-let centerZ = 10
-let baseAngle = 0
-const colors = [
-  'burlywood',
-  'magenta',
-  'teal',
-  'lime',
-  'sienna',
-  'indianred',
-  'seagreen',
-  'darkblue',
-  'hotpink'
-]
-const cards = colors.map((color, index) => {
-  const card = {
-    x: 0,
-    y: 100,
-    z: 0,
-    color,
-    angle: Math.PI * 2 / colors.length * (index + 1),
-    height: 100,
-    width: 100
-  }
-  card.z = centerZ + Math.sin(card.angle + baseAngle) * radius
-  card.x = Math.cos(card.angle + baseAngle) * radius
-
-  return card
-})
+let z = 500
+const points = []
+let angle = 0
+let drawing = false
 
 context.translate(width / 2, height / 2)
 
 const animate = () => {
   window.requestAnimationFrame(animate)
-  baseAngle += speed
-  cards.sort(zSort)
   // need to move due to the translation
   context.clearRect(-width / 2, -height / 2, width, height)
 
-  cards.forEach(card => {
-    const perspective = focalLength / (focalLength + card.z)
+  context.beginPath()
+  points.forEach((point, i) => {
+    const perspective = focalLength / (focalLength + point.z)
 
     context.save()
     context.scale(perspective, perspective)
-    context.translate(card.x, card.y)
-    context.fillStyle = card.color
-    context.fillRect(-card.width, -card.height, card.width, card.height)
-    context.restore()
+    context.translate(point.x, point.y)
 
-    card.x = Math.cos(card.angle + baseAngle) * radius
-    card.z = centerZ + Math.sin(card.angle + baseAngle) * radius
+    if (i) {
+      context.lineTo(0, 0)
+    } else {
+      context.moveTo(point.x, point.y)
+    }
+
+    point.z -= 1
+
+    if (point.z < 0) {
+      points.splice(i, 1)
+    }
+    context.restore()
   })
+  context.stroke()
+
+  angle += 0.01
 }
+
+const onMouseMove = ({ clientX, clientY }) => {
+  if (!drawing) return
+
+  const point = {
+    x: clientX - (width / 2),
+    y: clientY - (height / 2),
+    z
+  }
+
+  points.push(point)
+}
+
+const onMouseDown = () => drawing = true
+const onMouseUp = () => drawing = false
 
 const onResize = () => {
   canvas.width = window.innerWidth
   canvas.height = window.innerHeight
 }
 
-const onMouseMove = ({ clientX, clientY }) => {
-  mouse.x = clientX
-  mouse.y = clientY
-}
-
 window.addEventListener('resize', onResize, true)
+window.addEventListener('mousedown', onMouseDown, true)
+window.addEventListener('mouseup', onMouseUp, true)
 window.addEventListener('mousemove', onMouseMove, true)
 
 animate()
