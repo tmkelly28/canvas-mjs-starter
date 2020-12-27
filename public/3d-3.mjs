@@ -1,6 +1,5 @@
 const canvas = document.getElementById('canvas')
 const context = canvas.getContext('2d')
-const mouse = { x: 0, y: 0 }
 
 const width = window.innerWidth
 const height = window.innerHeight
@@ -8,21 +7,28 @@ canvas.width = width
 canvas.height = height
 
 const focalLength = 300
-
-const zSort = (c1, c2) => {
-  return c1.z > c2.z ? -1 : 1
-}
-
-let z = 500
 const points = []
-let angle = 0
-let drawing = false
+const numPoints = 200
+const centerZ = 2000
+const radius = 1000
+let baseAngle = 0
+let rotationSpeed = 0.01
+
+for (let i = 0; i < numPoints; i++) {
+  const angle = 0.2 * i
+  points.push({
+    angle,
+    y: 2000 - 4000 / numPoints * i,
+    x: Math.cos(angle + baseAngle) * radius,
+    z: centerZ + Math.sin(angle + baseAngle) * radius
+  })
+}
 
 context.translate(width / 2, height / 2)
 
 const animate = () => {
   window.requestAnimationFrame(animate)
-  // need to move due to the translation
+  baseAngle += rotationSpeed
   context.clearRect(-width / 2, -height / 2, width, height)
 
   context.beginPath()
@@ -33,38 +39,21 @@ const animate = () => {
     context.scale(perspective, perspective)
     context.translate(point.x, point.y)
 
-    if (i) {
-      context.lineTo(0, 0)
-    } else {
-      context.moveTo(point.x, point.y)
-    }
+    // "hack" to get the discs flipping around
+    // context.scale(Math.sin(point.angle + baseAngle), 1)
 
-    point.z -= 1
+    !i ? context.moveTo(0, 0) : context.lineTo(0, 0)
+    // context.beginPath()
+    // context.arc(0, 0, 40, 0, Math.PI * 2, false)
+    // context.fill()
 
-    if (point.z < 0) {
-      points.splice(i, 1)
-    }
     context.restore()
+
+    point.x = Math.cos(point.angle + baseAngle) * radius
+    point.z = centerZ + Math.sin(point.angle + baseAngle) * radius
   })
   context.stroke()
-
-  angle += 0.01
 }
-
-const onMouseMove = ({ clientX, clientY }) => {
-  if (!drawing) return
-
-  const point = {
-    x: clientX - (width / 2),
-    y: clientY - (height / 2),
-    z
-  }
-
-  points.push(point)
-}
-
-const onMouseDown = () => drawing = true
-const onMouseUp = () => drawing = false
 
 const onResize = () => {
   canvas.width = window.innerWidth
@@ -72,9 +61,5 @@ const onResize = () => {
 }
 
 window.addEventListener('resize', onResize, true)
-window.addEventListener('mousedown', onMouseDown, true)
-window.addEventListener('mouseup', onMouseUp, true)
-window.addEventListener('mousemove', onMouseMove, true)
 
 animate()
-
